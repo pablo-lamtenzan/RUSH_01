@@ -37,3 +37,14 @@ inline void s_size_swap(int_size_t* const restrict lhs, int_size_t* const restri
     *rhs = *lhs - *rhs;
     *lhs -= *rhs;
 }
+
+/** @brief swap @p lhs and @p rhs dereferences.
+ *  NOTE: @p lhs and @p rhs can not be the same object.
+ *  Specilized version swaps objects of @a int_size_t types.
+*/
+inline void sq_size_swap(sq_size_t* const restrict lhs, sq_size_t* const restrict rhs)
+{
+    *lhs += *lhs + *rhs;
+    *rhs = *lhs - *rhs;
+    *lhs -= *rhs;
+}
