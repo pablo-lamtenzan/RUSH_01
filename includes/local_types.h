@@ -8,7 +8,7 @@
 # include <stdint.h> // fast & portable types
 
 /// Array operations
-typedef uint_fast32_t uint_op_t;
+typedef char uint_op_t;
 /// Pointer operations
 typedef uint_fast64_t uint_size_t;
 /// Pointer arithmetic
