@@ -31,15 +31,6 @@ typedef struct  sq_print
 }               sq_print_t;
 
 /**
- *  @brief Stores 2 pointer to @p uint_op_t .
-*/
-typedef struct  pair
-{
-    uint_op_t* const    y;
-    uint_op_t* const    x;
-}               t_pair;
-
-/**
  * @brief Represent a square in the matrix.
  * @member: coord, the position in the matrix of the %t_sq.
  * @member: height the of the size.
@@ -47,7 +38,11 @@ typedef struct  pair
 typedef struct  sq
 {
     uint_size_t height;
-    t_pair      coord;
+    struct
+    {
+        uint_op_t* const    y;
+        uint_op_t* const    x;
+    };
 }               t_sq;
 
 /// Prepend ( into @p pointer ) @p size, sizeof(sq_size_t) into @p pointer dereference (sizeof(uint_size_t))
