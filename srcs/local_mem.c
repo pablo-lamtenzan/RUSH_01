@@ -28,7 +28,7 @@ static uint_size_t ft_atoi(const char*const s)
 /**
  *  @brief Read a line from stdin a return an integer
  * 
- *  Read data by chunks of 1 until \n.
+ *  Read data by chunks of 1 bytes until \n.
  *  @p convert Indicates if the read bytes need to be atoi.
  *  @error: 0 is returned.
 */
