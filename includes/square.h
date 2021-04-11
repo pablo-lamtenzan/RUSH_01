@@ -56,8 +56,8 @@ typedef struct  sq
 
 void        inject_prepend_4b_data(sq_size_t data, uint_size_t*const pointer);
 sq_print_t  create_sq_print(uint_size_t sq, const uint_op_t* const min_x, const uint_op_t* const max_x, uint_op_t ascii, sq_size_t hint);
-void        write_sq(sq_print_t* const sq);
+//void        write_sq(sq_print_t* const sq);
 
 
 // NEW VERSION
-bool        write_the_square(t_sq* const sq)  __attribute__((pure));
+bool        insert_square(t_sq* const sq)  __attribute__((pure));

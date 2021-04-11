@@ -60,7 +60,7 @@ static void write_x_axis(uint_op_t* const it, uint_size_t lenght)
         it[lenght - remember_lenght] = ascii;
 }
 
-bool write_the_square(t_sq* const sq) 
+bool insert_square(t_sq* const sq) 
 {
     uint_op_t* it;
     uint_size_t steps;
