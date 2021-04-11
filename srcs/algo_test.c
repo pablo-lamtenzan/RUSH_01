@@ -47,7 +47,43 @@ typedef struct  t_streak
 
 uint_op_t  same_height(t_streak streak)
 {
-
+	t_pos pos;
+	t_pos end;
+   /*  if (streak.size % 2 && pos.x % 2)
+	{
+		start_x = pos.x / 2;
+		size = mat_size / 2;
+		streak.size /= 2;
+		half_matrix = (uint_fast64_t*)mat;
+		mask = (streak.size << 32) + streak.size;
+		pos.y = 0;
+		while (pos.y < streak.size)
+		{
+			pos.x = start_x;
+			while (pos.x < streak.size && half_matrix[pos.y * size + pos.x] == mask)
+				pos.x++;
+			if (pos.x < streak.size)
+				return (0);
+			pos.y++;
+		}
+		return (1);
+	}
+	else */
+	{
+		pos.y = streak.pos.y;
+		end.y = streak.pos.y + streak.size;
+		end.x = streak.pos.x + streak.size;
+		while (pos.y < end.y)
+		{
+			pos.x = streak.pos.x;
+			while (pos.x < end.x && mat[pos.y * (mat_size + 1) + pos.x] == streak.height)
+				pos.x++;
+			if (pos.x < end.x)
+				return (0);
+			pos.y++;
+		}
+		return (1);
+	}
 }
 
 
@@ -86,51 +122,6 @@ uint_op_t  same_height(t_streak streak)
 
 
 // UNROLL LOOPS CAN BE AN OPTIZATION
-
-
-struct mystruct
-{
-    char c;
-    __packed short s; // recommended
-	t_pos                   pos;
-	t_pos                   end;
-
-   /*  if (streak.size % 2 && pos.x % 2)
-	{
-		start_x = pos.x / 2;
-		size = mat_size / 2;
-		streak.size /= 2;
-		half_matrix = (uint_fast64_t*)mat;
-		mask = (streak.size << 32) + streak.size;
-		pos.y = 0;
-		while (pos.y < streak.size)
-		{
-			pos.x = start_x;
-			while (pos.x < streak.size && half_matrix[pos.y * size + pos.x] == mask)
-				pos.x++;
-			if (pos.x < streak.size)
-				return (0);
-			pos.y++;
-		}
-		return (1);
-	}
-	else */
-	{
-		pos.y = streak.pos.y;
-		end.y = streak.pos.y + streak.size;
-		end.x = streak.pos.x + streak.size;
-		while (pos.y < end.y)
-		{
-			pos.x = streak.pos.x;
-			while (pos.x < end.x && mat[pos.y * (mat_size + 1) + pos.x] == streak.height)
-				pos.x++;
-			if (pos.x < end.x)
-				return (0);
-			pos.y++;
-		}
-		return (1);
-	}
-}
 
 void square_find()
 {

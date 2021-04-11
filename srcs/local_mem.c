@@ -3,7 +3,7 @@
 # include <local_mem.h>
 # include <stdlib.h>
 
-static inline is_digit(int ascii)
+static inline int is_digit(int ascii)
 {
     return ((ascii >= '0') & (ascii <= '9'));
 }
@@ -13,15 +13,13 @@ static inline is_digit(int ascii)
  *  @error: O is returned. 
  *  NOTE: \n used as delimiters.
 */
-static uint_size_t ft_atoi(const char*const s)
+static uint_size_t ft_atoi(const char* s)
 {
     uint_size_t number;
-    uint_size_t index;
 
     number = 0;
-    index = 0;
-    while (is_digit(*(s + index)))
-        number = number * 10 + *(s + index) - '0';
+    while (is_digit(*s))
+        number = number * 10 + *s++ - '0';
     return (number);
 }
 
@@ -66,7 +64,7 @@ bool        mem_read_stdin()
     if (height & ascii)
     {
         bytes -= read(STDIN_FILENO, static_matrix, STATIC_ROOM);
-        if (bytes >= height)
+        if ((uint_size_t)bytes >= height)
             return (false);
         if (bytes)
         {
