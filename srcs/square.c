@@ -4,6 +4,7 @@
 */
 
 # include <optimised_lib.h>
+# include <local_mem.h>
 
 /**
  *  @brief injects @p size into the first to the midle bits
@@ -51,3 +52,4 @@ write_sq(sq_print_t* const sq)
         x += distance;
     }
 }
+

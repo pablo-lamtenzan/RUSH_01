@@ -8,6 +8,7 @@
 # pragma once
 
 # include <local_types.h>
+# include <stdbool.h>
 
 /** 
  *  @brief struct used for print a square
@@ -34,14 +35,15 @@ typedef struct  sq_print
  * @brief Represent a square in the matrix.
  * @member: coord, the position in the matrix of the %t_sq.
  * @member: height the of the size.
- * */
+ *
+ */
 typedef struct  sq
 {
     uint_size_t height;
     struct
     {
-        uint_op_t* const    y;
-        uint_op_t* const    x;
+        uint_size_t y;
+        uint_size_t x;
     };
 }               t_sq;
 
@@ -55,3 +57,7 @@ typedef struct  sq
 void        inject_prepend_4b_data(sq_size_t data, uint_size_t*const pointer);
 sq_print_t  create_sq_print(uint_size_t sq, const uint_op_t* const min_x, const uint_op_t* const max_x, uint_op_t ascii, sq_size_t hint);
 void        write_sq(sq_print_t* const sq);
+
+
+// NEW VERSION
+bool        write_the_square(t_sq* const sq)  __attribute__((pure));
