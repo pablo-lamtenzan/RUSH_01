@@ -47,6 +47,51 @@ typedef struct  t_streak
 
 uint_op_t  same_height(t_streak streak)
 {
+
+}
+
+
+// NO INLINE ATTRIBUTE EXISTS
+// THINK ABOUT CALLS IN INLINED FUNC
+// IF A FUNCTION IS CALLED ONCE INLINE IS VIABLE TOO
+// INLINE FUNCTION MAY INCREASSE THE SIZE OF THE CODE (THAN CAN FUCK UP L1 EXECUTION)
+// ASM CODE IS LOADDED IN L1 TOO (IF IT FITS)
+// INLINE CAN BE BAD IN THIS CASES:
+/*
+    if (condition)
+        f(); // if is inlined
+    // code 
+*/
+// IF CONDITION IS FALSE, THEIR A CHUNK OF UNSED CODE  (POLLUATES L1)
+// CODE IS NOT LINEAR
+// THE OFTEN USED LINAR CODE IS PROBALLY LOADED INTO L1
+// THE LESS USED CODE (not linear) IS LOADDED SOMEWHERE ELSE TO NOT HURT L1 EFICENCY
+
+// long __builtin_expect(long EXP, long C); CAN BE USED TO PREDICT RESULTS
+
+// PROCESSORS PRIORIZES SOME LOOPS
+
+// ALIGNING EACH INSTRUCTIONS IS OPTIMAL IN:
+    // THE BEGIN OF FUNCTIONS CALL
+    // THE BEGIN OF A LOOP (see beter that, can fck up the code)
+    // THE BEGIN OF CODE AFTER A CONDITIONAL JUMP
+    // REASON: INSTRUCTIONS ARE FASTER AT THE BEGIN OF THE L1 CACHE
+    // OPTIMIZE: PREFETHING AND DECODING
+    // ALIGNING ALL THE CODES NOT MAKES SENSE
+    // CAN ONLY BE ACHIEVED IN ASM OR BUY THE COMPILER
+
+
+// Check atribute section
+
+
+
+// UNROLL LOOPS CAN BE AN OPTIZATION
+
+
+struct mystruct
+{
+    char c;
+    __packed short s; // recommended
 	t_pos                   pos;
 	t_pos                   end;
 
@@ -136,6 +181,7 @@ void square_find()
 		}
 	}
 }
+
 
 #define TEST_DATA "\
 0111222222\n\
