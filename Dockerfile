@@ -22,7 +22,7 @@ COPY ./libft/ ./libft/.
 
 RUN make re
 
-ARG arg="./tmp/genmap.pl 128"
+ARG arg="./tmp/benchmark.sh"
 
 RUN $arg | ./rush
 
