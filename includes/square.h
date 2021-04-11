@@ -8,6 +8,7 @@
 # pragma once
 
 # include <local_types.h>
+# include <stdbool.h>
 
 /** 
  *  @brief struct used for print a square
@@ -59,4 +60,4 @@ void        write_sq(sq_print_t* const sq);
 
 
 // NEW VERSION
-void        write_the_square(t_sq* const sq);
+bool        write_the_square(t_sq* const sq)  __attribute__((pure));

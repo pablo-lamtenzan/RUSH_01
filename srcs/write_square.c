@@ -2,6 +2,7 @@
 # include <square.h>
 # include <local_mem.h>
 
+
 static inline void
 write_x8(uint_op_t* const it, uint_size_t* const lenght, uint_size_t remember_lenght)
 {
@@ -59,7 +60,7 @@ static void write_x_axis(uint_op_t* const it, uint_size_t lenght)
         it[lenght - remember_lenght] = ascii;
 }
 
-void write_the_square(t_sq* const sq)
+bool write_the_square(t_sq* const sq) 
 {
     uint_op_t* it;
     uint_size_t steps;
@@ -71,4 +72,5 @@ void write_the_square(t_sq* const sq)
         write_x_axis(it, height);
         it += height;
     }
+    return (true);
 }
