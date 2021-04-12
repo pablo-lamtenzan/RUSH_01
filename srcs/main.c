@@ -3,24 +3,24 @@
 #include <square.h>
 #include <stdlib.h>
 
-t_uint_op   *g_matrix = NULL;
-t_uint_size g_dynamic_lenght = 0;
-t_uint_size g_height = 0;
-t_uint_op   g_ascii = 0;
+t_uint_op	*g_matrix = NULL;
+t_uint_size	g_dynamic_lenght = 0;
+t_uint_size	g_height = 0;
+t_uint_op	g_ascii = 0;
 
-int print_matrix()
+int	print_matrix(void)
 {
 	return (write(STDOUT_FILENO, g_matrix, g_height * (g_height + 1)) != -1);
 }
 
-int mark_the_square(t_streak *biggest)
+int	mark_the_square(t_streak *biggest)
 {
-	const t_pos	end =
-		{biggest->pos.x + biggest->size, biggest->pos.y + biggest->size};
-	t_pos   	pos;
+	t_pos		pos;
+	const t_pos	end = \
 
+	{biggest->pos.y + biggest->size, biggest->pos.x + biggest->size};
 	if (biggest->size != 1)
-	{	
+	{
 		pos.y = biggest->pos.y;
 		while (pos.y < end.y)
 		{
@@ -38,14 +38,15 @@ int mark_the_square(t_streak *biggest)
 	return (1);
 }
 
-int main()
+int	main(void)
 {
-	static t_streak streak;
+	static t_streak	streak;
+	const int		err =\
 
-	const int   err = !(mem_read_stdin()
+	!(mem_read_stdin()
 		&& find_the_square(&streak)
 		&& mark_the_square(&streak)
 		&& print_matrix());
 	free(g_matrix);
 	return (err);
-} 
+}
