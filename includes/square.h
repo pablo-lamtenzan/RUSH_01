@@ -10,26 +10,7 @@
 # include <local_types.h>
 # include <stdbool.h>
 
-/** 
- *  @brief struct used for print a square
- *  @member: sq_left_corner: The address of the top left corner.
- *  @member: sq_height: The height of the square.
- *  @member: ascii: The ascii character used to fill the square.
- *  @member: min_x: The address of start of the line.
- *  @member: max_x: The address of the end of the line.
- *  NOTE: size is 40 bytes.
-*/
-typedef struct  sq_print
-{
-    uint_op_t* const        sq_left_corner;
-    uint_size_t             sq_height;
-    uint_op_t               ascii;
-    struct
-    {
-        uint_op_t* const    min_x;
-        uint_op_t* const    max_x;
-    };
-}               sq_print_t;
+# define MACTH true
 
 /**
  * @brief Represent a square in the matrix.
@@ -47,6 +28,12 @@ typedef struct  sq
     };
 }               t_sq;
 
+<<<<<<< HEAD
+extern uint_size_t mask;
+
+bool        write_the_square(t_sq* const sq)  __attribute__((pure));
+bool        find_the_square(t_sq* const sq, uint_size_t* const matrix, uint_size_t matrix_lenght) __attribute__((pure));
+=======
 /// Prepend ( into @p pointer ) @p size, sizeof(sq_size_t) into @p pointer dereference (sizeof(uint_size_t))
 # define INJECT_SIZE(size, pointer) inject_append_4b_data(size, pointer)
 /// Represent the size stored in @p pointer .
@@ -61,3 +48,4 @@ sq_print_t  create_sq_print(uint_size_t sq, const uint_op_t* const min_x, const 
 
 // NEW VERSION
 bool        insert_square(t_sq* const sq)  __attribute__((pure));
+>>>>>>> 87c3f5fee0ccdfd8664bb318a570fd5b2763c2d0
