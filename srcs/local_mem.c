@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   local_mem.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*   By: plamtenz <plamtenz@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/12 22:54:59 by pablo             #+#    #+#             */
-/*   Updated: 2021/04/12 22:56:48 by pablo            ###   ########.fr       */
+/*   Created: 2021/04/11 19:31:13 by plamtenz          #+#    #+#             */
+/*   Updated: 2021/04/12 21:06:44 by plamtenz         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static t_uint_size	read_stdin_line_to_integer(bool convert)
 	if (bytes == 1)
 	{
 		if (convert)
-			return (ft_atoi(data));
+			return (ft_atoi((char *)data));
 		else
 			return (*data);
 	}

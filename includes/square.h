@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   local_mem.h                                        :+:      :+:    :+:   */
+/*   square.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: plamtenz <plamtenz@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: chamada <chamada@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/11 19:31:13 by plamtenz          #+#    #+#             */
-/*   Updated: 2021/04/12 22:57:16 by plamtenz         ###   ########lyon.fr   */
+/*   Created: 2021/04/10 04:03:26 by chamada           #+#    #+#             */
+/*   Updated: 2021/04/12 21:20:26 by chamada          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LOCAL_MEM_H
-# define LOCAL_MEM_H
+#ifndef SQUARE_H
+# define SQUARE_H
 
-# include <stdbool.h>
 # include <local_types.h>
 
-extern t_uint_op	*g_matrix;
-extern t_uint_size	g_height;
-extern t_uint_op	g_ascii;
+typedef struct	s_pos
+{
+	t_uint_size	y;
+	t_uint_size	x;
+}				t_pos;
 
-bool				mem_read_stdin();
+typedef struct	s_streak
+{
+	t_pos		pos;
+	t_uint_size	size;
+	t_uint_op	height;
+}				t_streak;
+
+int				find_the_square(t_streak *dest);
 
 #endif
