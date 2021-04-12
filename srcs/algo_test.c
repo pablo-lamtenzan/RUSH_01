@@ -97,6 +97,8 @@ uint_op_t  same_height(t_streak streak)
 
 // UNROLL LOOPS CAN BE AN OPTIZATION
 
+#include <stdio.h>
+
 int find_the_square(t_sq *square)
 {
 	t_pos		pos;
@@ -109,11 +111,11 @@ int find_the_square(t_sq *square)
 
 	while (pos.y != height)
 	{
-		streak = (t_streak){pos, 1, matrix[pos.y * (height + 1) + pos.x]};
+		streak = (t_streak){pos, 0, matrix[pos.y * (height + 1) + pos.x]};
 		while (pos.x != height
 		&& matrix[pos.y * (height + 1) + pos.x] == streak.height)
 			pos.x++;
-		streak.size = pos.x - streak.pos.x;
+		streak.size = pos.x - streak.pos.x - 1;
 		while (streak.size > biggest.size && !same_height(streak))
 		{
 			streak.pos.x++;
@@ -129,12 +131,13 @@ int find_the_square(t_sq *square)
 		{
 			pos.x = 0;
 			pos.y++;
-			if (height - pos.y  + 1< biggest.size)
+			if (height - pos.y < biggest.size)
 				break;
 		}
 	}
 	if (biggest.size != 1)
 	{
+		printf("Biggest size: %zu\n", biggest.size);
 		streak.pos.x = biggest.pos.x;
 		pos.y = biggest.pos.y;
 		biggest.pos.y += biggest.size;
