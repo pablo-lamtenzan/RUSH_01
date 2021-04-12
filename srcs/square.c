@@ -29,7 +29,7 @@ t_sq store_square(int_size_t* const top_left_corner_addr, int_size_t height)
 static inline
 bool apply_mask(int_size_t* const target)
 {
-    return (*target & mask);
+    return ((*target & *mask_ptr) == mask_ptr);
 }
 
 /**
