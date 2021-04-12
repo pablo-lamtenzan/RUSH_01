@@ -23,7 +23,6 @@ LIBARS = $(notdir $(LIBS))
 INCS = $(LIBINCS) $(INCDIR)
 SRCS = $(addprefix $(SRCDIR)/,\
 	algo_test.c\
-	insert_square.c\
 	local_mem.c\
 	main.c\
 )

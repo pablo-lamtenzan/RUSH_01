@@ -1,46 +1,21 @@
-/** @file square.h
- * 
- *  A square can be stored in a @p uint_size_t.
- *  - 4 first bytes represent the border size.
- *  - 4 last bytes represent the last 4 bytes of the address of top left corner.
-*/
+#ifndef SQUARE_H
+# define SQUARE_H
 
-# pragma once
+#include <local_types.h>
 
-# include <local_types.h>
-# include <stdbool.h>
-
-# define MACTH true
-
-typedef struct  s_pos
+typedef struct	s_pos
 {
-	uint_size_t   y;
-	uint_size_t   x;
-}               t_pos;
+	uint_size_t	y;
+	uint_size_t	x;
+}				t_pos;
 
-typedef struct  t_streak
+typedef struct	t_streak
 {
-	t_pos			pos;
-	uint_size_t		size;
-	uint_op_t		height;
-}               t_streak;
+	t_pos		pos;
+	uint_size_t	size;
+	uint_op_t	height;
+}				t_streak;
 
-/**
- * @brief Represent a square in the matrix.
- * @member: coord, the position in the matrix of the %t_sq.
- * @member: height the of the size.
- *
- */
-typedef struct  sq
-{
-    uint_size_t height;
-    struct
-    {
-        uint_size_t y;
-        uint_size_t x;
-    };
-}               t_sq;
+int	find_the_square(t_streak *dest);
 
-extern uint_size_t mask;
-
-int     find_the_square(t_streak *square);
+#endif

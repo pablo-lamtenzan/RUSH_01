@@ -30,13 +30,13 @@ void		find_streak(t_streak *streak, t_pos *pos, uint_size_t biggest_size)
 	*streak = (t_streak){*pos, 0, matrix[pos->y * (height + 1) + pos->x]};
 	while (pos->x != height
 	&& matrix[pos->y * (height + 1) + pos->x] == streak->height)
-		pos->x++;
+		(pos->x)++;
 	streak->size = pos->x - streak->pos.x;
 	if (streak->size > height - pos->y)
 		streak->size = height - pos->y;
 	while (streak->size > biggest_size && !same_height(streak))
 	{
-		streak->pos.x++;
+		(streak->pos.x)++;
 		streak->size--;
 	}
 }
