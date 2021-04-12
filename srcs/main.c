@@ -8,7 +8,6 @@ uint_size_t dynamic_lenght = 0; // 8
 uint_size_t height = 0; // 8
 uint_op_t   ascii = 0; // 4
 
-int find_the_square(t_sq *square);
 
 int print_matrix()
 {
@@ -18,8 +17,8 @@ int print_matrix()
 int main()
 {
     static t_sq sq = {0};
-    return (mem_read_stdin()
+    return (!(mem_read_stdin()
     && find_the_square(&sq)
-    && write_the_square(&sq, static_matrix)
-    && print_matrix());
+   // && write_the_square(&sq, static_matrix)
+    && print_matrix()));
 } 
