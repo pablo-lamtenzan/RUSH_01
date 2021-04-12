@@ -12,6 +12,19 @@
 
 # define MACTH true
 
+typedef struct  s_pos
+{
+	uint_size_t   y;
+	uint_size_t   x;
+}               t_pos;
+
+typedef struct  t_streak
+{
+	t_pos			pos;
+	uint_size_t		size;
+	uint_op_t		height;
+}               t_streak;
+
 /**
  * @brief Represent a square in the matrix.
  * @member: coord, the position in the matrix of the %t_sq.
@@ -30,5 +43,4 @@ typedef struct  sq
 
 extern uint_size_t mask;
 
-bool    write_the_square(t_sq* const sq)  __attribute__((pure));
-int     find_the_square(t_sq *square);
+int     find_the_square(t_streak *square);

@@ -13,16 +13,42 @@ uint_op_t   ascii = 0; // 4
 
 int print_matrix()
 {
-    return (write(STDOUT_FILENO, matrix, height * (height + 1)) != -1);
+	return (write(STDOUT_FILENO, matrix, height * (height + 1)) != -1);
+}
+
+int mark_the_square(t_streak *biggest)
+{
+	const t_pos	end =
+		{biggest->pos.x + biggest->size, biggest->pos.y + biggest->size};
+	t_pos   	pos;
+
+	if (biggest->size != 1)
+	{	
+		pos.y = biggest->pos.y;
+		while (pos.y < end.y)
+		{
+			pos.x = biggest->pos.x;
+			while (pos.x < end.x)
+			{
+				matrix[pos.y * (height + 1) + pos.x] = ascii;
+				pos.x++;
+			}
+			pos.y++;
+		}
+	}
+	else
+		matrix[0] = ascii;
+	return (1);
 }
 
 int main()
 {
-    static t_sq sq = {0};
-    const int   err = !(mem_read_stdin()
-        && find_the_square(&sq)
-    // && write_the_square(&sq, static_matrix)
-        && print_matrix());
-    free(dynamic_matrix);
-    return (err);
+	static t_streak streak;
+
+	const int   err = !(mem_read_stdin()
+		&& find_the_square(&streak)
+		&& mark_the_square(&streak)
+		&& print_matrix());
+	free(dynamic_matrix);
+	return (err);
 } 

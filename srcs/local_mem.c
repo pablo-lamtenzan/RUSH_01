@@ -87,14 +87,11 @@ bool        mem_read_stdin()
 	if (height)
 	{
 		ascii = (uint_op_t)read_stdin_line_to_integer(false);
-		printf("height: %zu, ascii: '%c'\n", height, ascii);
 		if (ascii)
 		{
 			bytes = height * (height + 1);
-			printf("Reading %zu bytes...\n", bytes);
 			if (bytes > STATIC_ROOM)
 			{
-				dprintf(2, "Using dynamic matrix...\n");
 				if (!(matrix = malloc(sizeof(*matrix) * bytes)))
 					return (false);
 			}
