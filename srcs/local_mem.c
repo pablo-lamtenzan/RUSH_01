@@ -81,8 +81,7 @@ bool		read_stdin_into(uint_op_t *matrix, uint_size_t bytes)
 
 bool        mem_read_stdin()
 {
-	uint_size_t	bytes_static;
-	uint_size_t	bytes_dynamic;
+	uint_size_t	bytes;
 
 	height = read_stdin_line_to_integer(true);
 	if (height)
@@ -91,48 +90,18 @@ bool        mem_read_stdin()
 		printf("height: %zu, ascii: '%c'\n", height, ascii);
 		if (ascii)
 		{
-			bytes_static = height * (height + 1);
-			printf("Reading %zu bytes...\n", bytes_static);
-			if (bytes_static < STATIC_ROOM)
-				bytes_dynamic = 0;
-			else
+			bytes = height * (height + 1);
+			printf("Reading %zu bytes...\n", bytes);
+			if (bytes >= STATIC_ROOM)
 			{
-				bytes_dynamic = bytes_static - STATIC_ROOM;
-				bytes_static = STATIC_ROOM;
+				printf("Using dynamic matrix...\n");
+				dynamic_matrix = malloc(sizeof(*dynamic_matrix) * bytes);
+				if (!dynamic_matrix)
+					return (false);
+				matrix = dynamic_matrix;
 			}
-			read_stdin_into(static_matrix, bytes_static);
-			dynamic_matrix = malloc(sizeof(*dynamic_matrix) * dynamic_lenght);
-			if (!dynamic_matrix)
-				return (false);
-			dynamic_lenght = bytes_dynamic;
-			read_stdin_into(dynamic_matrix, bytes_dynamic);
+			return (read_stdin_into(matrix, bytes));
 		}
 	}
-	return (true);
+	return (false);
 }
-/* 
-bool        mem_read_stdin()
-{
-	int_size_t bytes;
-
-	height = read_stdin_line_to_integer(true);
-	ascii = read_stdin_line_to_integer(false);
-	printf("height: %zu, ascii: '%c'\n", height, ascii);
-	bytes = height * height;
-	if (height && ascii)
-	{
-		bytes += height;
-		bytes -= read(STDIN_FILENO, static_matrix, STATIC_ROOM);
-		printf("Bytes left: %zd\n", bytes);
-		if ((uint_size_t)bytes >= height)
-			return (false);
-		if (bytes)
-		{
-			dynamic_lenght = bytes;
-			if (!(dynamic_matrix = malloc(sizeof(*dynamic_matrix) * dynamic_lenght)))
-				return (false);
-			bytes -= read(STDIN_FILENO, dynamic_matrix, dynamic_lenght);
-		}
-	}
-	return (bytes == 0);
-} */

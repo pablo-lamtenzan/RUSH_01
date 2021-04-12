@@ -9,7 +9,7 @@
 
 extern uint_op_t   static_matrix[STATIC_ROOM]; // 8
 extern uint_op_t*  dynamic_matrix; // 8
-extern uint_size_t dynamic_lenght; // 8
+extern uint_op_t*  matrix; // 8
 extern uint_size_t height; // 8
 extern uint_op_t   ascii; // 4
 

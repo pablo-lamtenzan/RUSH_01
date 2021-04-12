@@ -43,42 +43,21 @@ uint_op_t  same_height(t_streak streak)
 {
 	t_pos pos;
 	t_pos end;
-   /*  if (streak.size % 2 && pos.x % 2)
+
+//	printf("Checking for size %zu, at pos {%zu, %zu}\n", streak.size, streak.pos.x, streak.pos.y);
+	pos.y = streak.pos.y;
+	end.y = streak.pos.y + streak.size;
+	end.x = streak.pos.x + streak.size;
+	while (pos.y < end.y)
 	{
-		start_x = pos.x / 2;
-		size = mat_size / 2;
-		streak.size /= 2;
-		half_matrix = (uint_fast64_t*)mat;
-		mask = (streak.size << 32) + streak.size;
-		pos.y = 0;
-		while (pos.y < streak.size)
-		{
-			pos.x = start_x;
-			while (pos.x < streak.size && half_matrix[pos.y * size + pos.x] == mask)
-				pos.x++;
-			if (pos.x < streak.size)
-				return (0);
-			pos.y++;
-		}
-		return (1);
+		pos.x = streak.pos.x;
+		while (pos.x < end.x && matrix[pos.y * (height + 1) + pos.x] == streak.height)
+			pos.x++;
+		if (pos.x < end.x)
+			return (0);
+		pos.y++;
 	}
-	else */
-	{
-		//printf("Checking for size %zu, at pos {%zu, %zu}\n", streak.size, streak.pos.x, streak.pos.y);
-		pos.y = streak.pos.y;
-		end.y = streak.pos.y + streak.size;
-		end.x = streak.pos.x + streak.size;
-		while (pos.y < end.y)
-		{
-			pos.x = streak.pos.x;
-			while (pos.x < end.x && static_matrix[pos.y * (height + 1) + pos.x] == streak.height)
-				pos.x++;
-			if (pos.x < end.x)
-				return (0);
-			pos.y++;
-		}
-		return (1);
-	}
+	return (1);
 }
 
 
@@ -126,22 +105,28 @@ int find_the_square(t_sq *square)
 
 	*square = (t_sq){1, {0, 0}};
 	pos = (t_pos){0, 0};
-	biggest = (t_streak){{0, 0}, 1, static_matrix[0]};
-	streak = (t_streak){{0, 0}, 1, static_matrix[0]};
+	biggest = (t_streak){{0, 0}, 1, matrix[0]};
+	streak = (t_streak){{0, 0}, 1, matrix[0]};
 
 	while (pos.y != height)
 	{
-		streak = (t_streak){pos, 1, static_matrix[pos.y * (height + 1) + pos.x]};
+		streak = (t_streak){pos, 1, matrix[pos.y * (height + 1) + pos.x]};
 		while (pos.x != height
-		&& static_matrix[pos.y * (height + 1) + pos.x] == streak.height)
+		&& matrix[pos.y * (height + 1) + pos.x] == streak.height)
 			pos.x++;
 		streak.size = pos.x - streak.pos.x;
 		if (streak.size > biggest.size && same_height(streak))
+		{
 			biggest = streak;
+			if (height - pos.y < biggest.size)
+				break;
+		}
 		if (pos.x == height)
 		{
 			pos.x = 0;
 			pos.y++;
+			if (height - pos.y < biggest.size)
+				break;
 		}
 	}
 	printf("streak size: %lu\n", biggest.size);
@@ -156,7 +141,7 @@ int find_the_square(t_sq *square)
 			pos.x = streak.pos.x;
 			while (pos.x < biggest.pos.x)
 			{
-				static_matrix[pos.y * (height + 1) + pos.x] = '.';
+				matrix[pos.y * (height + 1) + pos.x] = '.';
 				pos.x++;
 			}
 			pos.y++;
