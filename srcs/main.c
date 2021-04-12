@@ -1,15 +1,11 @@
 #include <unistd.h>
 #include <local_mem.h>
-#include <square.h>
 #include <stdlib.h>
 
-uint_op_t   static_matrix[STATIC_ROOM]; // 8
-uint_op_t   *dynamic_matrix = NULL;
-uint_op_t   *matrix = static_matrix; // 8
-uint_size_t dynamic_lenght = 0; // 8
-uint_size_t height = 0; // 8
-uint_op_t   ascii = 0; // 4
-
+uint_op_t   *matrix = NULL;
+uint_size_t dynamic_lenght = 0;
+uint_size_t height = 0;
+uint_op_t   ascii = 0;
 
 int print_matrix()
 {
