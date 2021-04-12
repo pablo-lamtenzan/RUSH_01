@@ -115,7 +115,7 @@ int find_the_square(t_sq *square)
 		while (pos.x != height
 		&& matrix[pos.y * (height + 1) + pos.x] == streak.height)
 			pos.x++;
-		streak.size = pos.x - streak.pos.x - 1;
+		streak.size = pos.x - streak.pos.x;
 		while (streak.size > biggest.size && !same_height(streak))
 		{
 			streak.pos.x++;
