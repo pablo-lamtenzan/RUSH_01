@@ -63,9 +63,10 @@ static void write_x_axis(uint_op_t* const it, uint_size_t lenght)
 bool insert_square(t_sq* const sq) 
 {
     uint_op_t* it;
+
     uint_size_t steps;
 
-    it = &static_matrix[sq->y * height + sq->x];
+    it = &matrix[sq->y * height + sq->x];
     steps = height;
     while (steps--)
     {

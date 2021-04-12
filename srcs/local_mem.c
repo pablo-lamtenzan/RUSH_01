@@ -92,13 +92,11 @@ bool        mem_read_stdin()
 		{
 			bytes = height * (height + 1);
 			printf("Reading %zu bytes...\n", bytes);
-			if (bytes >= STATIC_ROOM)
+			if (bytes > STATIC_ROOM)
 			{
-				printf("Using dynamic matrix...\n");
-				dynamic_matrix = malloc(sizeof(*dynamic_matrix) * bytes);
-				if (!dynamic_matrix)
+				dprintf(2, "Using dynamic matrix...\n");
+				if (!(matrix = malloc(sizeof(*matrix) * bytes)))
 					return (false);
-				matrix = dynamic_matrix;
 			}
 			return (read_stdin_into(matrix, bytes));
 		}
