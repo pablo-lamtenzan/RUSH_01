@@ -17,7 +17,6 @@
  *      store the size (address start always with the same bytes).
 */
 
-#include <square.h>
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>

@@ -1,17 +1,11 @@
-/** @file types.h
- *  
- * @brief Local types definition.
-*/
+# ifndef LOCAL_TYPES_H
+# define LOCAL_TYPES_H
 
-# pragma once
+# include <stdint.h>
 
-# include <stdint.h> // fast & portable types
+typedef char            uint_op_t;
+typedef uint_fast64_t   uint_size_t;
+typedef int_fast64_t    int_size_t;
+typedef uint_fast32_t   sq_size_t;
 
-/// Array operations
-typedef char uint_op_t;
-/// Pointer operations
-typedef uint_fast64_t uint_size_t;
-/// Pointer arithmetic
-typedef int_fast64_t int_size_t;
-/// Square size
-typedef uint_fast32_t sq_size_t;
+#endif
