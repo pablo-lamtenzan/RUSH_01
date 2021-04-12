@@ -64,7 +64,7 @@ uint_op_t  same_height(t_streak streak)
 	}
 	else */
 	{
-		printf("Checking for size %zu\n", streak.size);
+		//printf("Checking for size %zu, at pos {%zu, %zu}\n", streak.size, streak.pos.x, streak.pos.y);
 		pos.y = streak.pos.y;
 		end.y = streak.pos.y + streak.size;
 		end.x = streak.pos.x + streak.size;

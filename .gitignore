@@ -3,3 +3,5 @@ a.out
 .vscode/
 rush
 obj/
+*.map
+!tmp/*.map

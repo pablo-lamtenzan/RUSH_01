@@ -30,7 +30,7 @@ static uint_size_t ft_atoi(const char* s)
  *  @p convert Indicates if the read bytes need to be atoi.
  *  @error: 0 is returned.
 */
-static uint_op_t read_stdin_line_to_integer(bool convert)
+static uint_size_t read_stdin_line_to_integer(bool convert)
 {
 	uint_size_t bytes;
 	uint_op_t   index;
@@ -38,10 +38,17 @@ static uint_op_t read_stdin_line_to_integer(bool convert)
 
 	bytes = 0;
 	index = 0;
-	while (((bytes = read(STDIN_FILENO, data + index, 1UL)) > 0L)
+	while (((bytes = read(STDIN_FILENO, data + index, 1UL)) == 1)
 	& (*(data + index) != '\n'))
 		++index;
-	return (convert ? ft_atoi(data) : *data);
+	if (bytes == 1)
+	{
+		if (convert)
+			return ft_atoi(data);
+		else
+			return *data;
+	}
+	return (0);
 }
 
 /**
@@ -56,47 +63,49 @@ static uint_op_t read_stdin_line_to_integer(bool convert)
 */
 #include <stdio.h>
 
+bool		read_stdin_into(uint_op_t *matrix, uint_size_t bytes)
+{
+	uint_size_t	read_bytes;
+	uint_size_t	index;
+
+	index = 0;
+	while (index < bytes)
+	{
+		read_bytes = read(STDIN_FILENO, matrix + index, bytes);
+		if (read_bytes <= 0)
+			break;
+		index += read_bytes;
+	}
+	return (index == bytes);
+}
+
 bool        mem_read_stdin()
 {
 	uint_size_t	bytes_static;
 	uint_size_t	bytes_dynamic;
-	uint_size_t	index;
-	int_size_t	read_bytes;
 
 	height = read_stdin_line_to_integer(true);
-	ascii = read_stdin_line_to_integer(false);
-	
-	index = 0;
-	if (height && ascii)
+	if (height)
 	{
-		bytes_static = height * (height + 1);
-		printf("Reading %zu bytes...\n", bytes_static);
-		if (bytes_static < STATIC_ROOM)
-			bytes_dynamic = 0;
-		else
+		ascii = (uint_op_t)read_stdin_line_to_integer(false);
+		printf("height: %zu, ascii: '%c'\n", height, ascii);
+		if (ascii)
 		{
-			bytes_dynamic = bytes_static - STATIC_ROOM;
-			bytes_static = STATIC_ROOM;
-		}
-		while (bytes_static)
-		{
-			read_bytes = read(STDIN_FILENO, static_matrix + index, bytes_static);
-			if (read_bytes <= 0)
-				return (false);
-			bytes_static -= read_bytes;
-			index += read_bytes;
-		}
-		index = 0;
-		while (bytes_dynamic)
-		{
+			bytes_static = height * (height + 1);
+			printf("Reading %zu bytes...\n", bytes_static);
+			if (bytes_static < STATIC_ROOM)
+				bytes_dynamic = 0;
+			else
+			{
+				bytes_dynamic = bytes_static - STATIC_ROOM;
+				bytes_static = STATIC_ROOM;
+			}
+			read_stdin_into(static_matrix, bytes_static);
 			dynamic_matrix = malloc(sizeof(*dynamic_matrix) * dynamic_lenght);
 			if (!dynamic_matrix)
 				return (false);
-			read_bytes = read(STDIN_FILENO, dynamic_matrix + index, bytes_dynamic);
-			if (read_bytes <= 0)
-				return (false);
-			bytes_dynamic -= read_bytes;
-			index += read_bytes;
+			dynamic_lenght = bytes_dynamic;
+			read_stdin_into(dynamic_matrix, bytes_dynamic);
 		}
 	}
 	return (true);

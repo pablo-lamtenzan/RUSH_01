@@ -32,9 +32,9 @@ OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 DEPS = $(OBJS:.o=.d)
 
 # Flags
-CFLAGS = -Wall -Wextra -Werror $(INCS:%=-I%) -fsanitize=address -g3
+CFLAGS = -Wall -Wextra -Werror $(INCS:%=-I%) -g3 -fsanitize=address
 DFLAGS = -MT $@ -MMD -MP -MF $(OBJDIR)/$*.d
-LDFLAGS = $(LIBDIRS:%=-L%) -fsanitize=address -g3
+LDFLAGS = $(LIBDIRS:%=-L%)  -g3 -fsanitize=address
 LDLIBS = $(LIBARS:lib%.a=-l%)
 
 # Compiling commands

@@ -4,7 +4,7 @@
 # include <stdbool.h>
 # include <local_types.h>
 
-# define HEIGHT 128UL
+# define HEIGHT 1024UL
 # define STATIC_ROOM (HEIGHT * (HEIGHT + 1UL))
 
 extern uint_op_t   static_matrix[STATIC_ROOM]; // 8
