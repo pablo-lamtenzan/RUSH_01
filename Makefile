@@ -23,15 +23,18 @@ LIBARS = $(notdir $(LIBS))
 INCS = $(LIBINCS) $(INCDIR)
 SRCS = $(addprefix $(SRCDIR)/,\
 	algo_test.c\
+	insert_square.c\
+	local_mem.c\
+	main.c\
 )
 
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 DEPS = $(OBJS:.o=.d)
 
 # Flags
-CFLAGS = -Wall -Wextra -Werror $(INCS:%=-I%)
+CFLAGS = -Wall -Wextra -Werror $(INCS:%=-I%) -fsanitize=address -g3
 DFLAGS = -MT $@ -MMD -MP -MF $(OBJDIR)/$*.d
-LDFLAGS = $(LIBDIRS:%=-L%)
+LDFLAGS = $(LIBDIRS:%=-L%) -fsanitize=address -g3
 LDLIBS = $(LIBARS:lib%.a=-l%)
 
 # Compiling commands

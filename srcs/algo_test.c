@@ -22,14 +22,8 @@
 #include <string.h>
 #include <unistd.h>
 
+#include <local_mem.h>
 
-#define MATRIX_SIZE 1024U
-
-static uint_op_t    mat_static[MATRIX_SIZE * (MATRIX_SIZE + 1)];
-
-static uint_op_t*   mat = mat_static;
-
-static uint_size_t  mat_size = 0;
 
 typedef struct  s_pos
 {
@@ -70,13 +64,14 @@ uint_op_t  same_height(t_streak streak)
 	}
 	else */
 	{
+		printf("Checking for size %zu\n", streak.size);
 		pos.y = streak.pos.y;
 		end.y = streak.pos.y + streak.size;
 		end.x = streak.pos.x + streak.size;
 		while (pos.y < end.y)
 		{
 			pos.x = streak.pos.x;
-			while (pos.x < end.x && mat[pos.y * (mat_size + 1) + pos.x] == streak.height)
+			while (pos.x < end.x && static_matrix[pos.y * (height + 1) + pos.x] == streak.height)
 				pos.x++;
 			if (pos.x < end.x)
 				return (0);
@@ -123,38 +118,34 @@ uint_op_t  same_height(t_streak streak)
 
 // UNROLL LOOPS CAN BE AN OPTIZATION
 
-void square_find()
+int find_the_square(t_sq *square)
 {
 	t_pos		pos;
 	t_streak	biggest;
 	t_streak	streak;
 
-	biggest = (t_streak){{0, 0}, 1, mat[0]};
-	streak = (t_streak){{0, 0}, 1, mat[0]};
+	*square = (t_sq){1, {0, 0}};
+	pos = (t_pos){0, 0};
+	biggest = (t_streak){{0, 0}, 1, static_matrix[0]};
+	streak = (t_streak){{0, 0}, 1, static_matrix[0]};
 
-	pos.y = 0;
-	while (pos.y != mat_size)
+	while (pos.y != height)
 	{
-		pos.x = 0;
+		streak = (t_streak){pos, 1, static_matrix[pos.y * (height + 1) + pos.x]};
+		while (pos.x != height
+		&& static_matrix[pos.y * (height + 1) + pos.x] == streak.height)
+			pos.x++;
+		streak.size = pos.x - streak.pos.x;
 		if (streak.size > biggest.size && same_height(streak))
 			biggest = streak;
-		streak = (t_streak){pos, 1, mat[pos.y * (mat_size + 1) + pos.x]};
-		while (pos.x != mat_size)
+		if (pos.x == height)
 		{
-			if (mat[pos.y * (mat_size + 1) + pos.x] == streak.height)
-				streak.size++;
-			else
-			{
-				if (streak.size > biggest.size && same_height(streak))
-					biggest = streak;
-				streak = (t_streak){pos, 1, mat[pos.y * (mat_size + 1) + pos.x]};
-			}
-			pos.x++;
+			pos.x = 0;
+			pos.y++;
 		}
-		pos.y++;
 	}
-	printf("streak size: %lu\n", streak.size);
-	if (streak.size != 0)
+	printf("streak size: %lu\n", biggest.size);
+	if (biggest.size != 1)
 	{
 		streak.pos.x = biggest.pos.x;
 		pos.y = biggest.pos.y;
@@ -165,36 +156,11 @@ void square_find()
 			pos.x = streak.pos.x;
 			while (pos.x < biggest.pos.x)
 			{
-				mat[pos.y * (mat_size + 1) + pos.x] = '.';
+				static_matrix[pos.y * (height + 1) + pos.x] = '.';
 				pos.x++;
 			}
 			pos.y++;
 		}
 	}
-}
-
-
-#define TEST_DATA "\
-0111222222\n\
-0111222222\n\
-0111222222\n\
-0122232222\n\
-0122222222\n\
-0122222222\n\
-0122222222\n\
-0122222222\n\
-0122222222\n\
-0122222222\n\
-0122222222\n\
-0122222222\n"
-
-int main()
-{
-	mat_size = 10;
-
-	memcpy(mat_static, TEST_DATA, sizeof(TEST_DATA) - 1);
-
-	square_find();
-	write(1, mat_static, mat_size * (mat_size + 1));
-	return (0);
+	return (1);
 }
