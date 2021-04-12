@@ -39,28 +39,6 @@ typedef struct  t_streak
 }               t_streak;
 
 
-uint_op_t  same_height(t_streak streak)
-{
-	t_pos pos;
-	t_pos end;
-
-//	printf("Checking for size %zu, at pos {%zu, %zu}\n", streak.size, streak.pos.x, streak.pos.y);
-	pos.y = streak.pos.y;
-	end.y = streak.pos.y + streak.size;
-	end.x = streak.pos.x + streak.size;
-	while (pos.y < end.y)
-	{
-		pos.x = streak.pos.x;
-		while (pos.x < end.x && matrix[pos.y * (height + 1) + pos.x] == streak.height)
-			pos.x++;
-		if (pos.x < end.x)
-			return (0);
-		pos.y++;
-	}
-	return (1);
-}
-
-
 // NO INLINE ATTRIBUTE EXISTS
 // THINK ABOUT CALLS IN INLINED FUNC
 // IF A FUNCTION IS CALLED ONCE INLINE IS VIABLE TOO
@@ -97,6 +75,28 @@ uint_op_t  same_height(t_streak streak)
 
 // UNROLL LOOPS CAN BE AN OPTIZATION
 
+
+uint_op_t  same_height(t_streak streak)
+{
+	t_pos pos;
+	t_pos end;
+
+	//dprintf(2, "Checking for size %zu, at pos {%zu, %zu}\n", streak.size, streak.pos.x, streak.pos.y);
+	pos.y = streak.pos.y;
+	end.y = streak.pos.y + streak.size;
+	end.x = streak.pos.x + streak.size;
+	while (pos.y < end.y)
+	{
+		pos.x = streak.pos.x;
+		while (pos.x < end.x && matrix[pos.y * (height + 1) + pos.x] == streak.height)
+			pos.x++;
+		if (pos.x < end.x)
+			return (0);
+		pos.y++;
+	}
+	return (1);
+}
+
 #include <stdio.h>
 
 int find_the_square(t_sq *square)
@@ -116,6 +116,8 @@ int find_the_square(t_sq *square)
 		&& matrix[pos.y * (height + 1) + pos.x] == streak.height)
 			pos.x++;
 		streak.size = pos.x - streak.pos.x;
+		if (streak.size > height - pos.y)
+			streak.size = height - pos.y;
 		while (streak.size > biggest.size && !same_height(streak))
 		{
 			streak.pos.x++;
