@@ -10,8 +10,6 @@ RUN apt-get install gcc -y
 
 WORKDIR /tmp/
 
-COPY ./tmp/. ./tmp/.
-
 COPY ./srcs/. ./srcs/.
 
 COPY ./includes/. ./includes/.
@@ -20,10 +18,12 @@ COPY ./Makefile .
 
 COPY ./libft/ ./libft/.
 
-RUN make re
+COPY ./tmp/. ./tmp/.
 
-ARG arg="./tmp/benchmark.sh"
+RUN make re && make fclean && make
 
-RUN $arg | ./rush
+ARG NAME
+
+RUN cat $NAME | ./rush
 
 CMD /bin/bash
