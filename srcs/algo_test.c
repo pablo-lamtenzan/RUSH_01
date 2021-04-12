@@ -106,7 +106,6 @@ int find_the_square(t_sq *square)
 	*square = (t_sq){1, {0, 0}};
 	pos = (t_pos){0, 0};
 	biggest = (t_streak){{0, 0}, 1, matrix[0]};
-	streak = (t_streak){{0, 0}, 1, matrix[0]};
 
 	while (pos.y != height)
 	{
@@ -115,21 +114,25 @@ int find_the_square(t_sq *square)
 		&& matrix[pos.y * (height + 1) + pos.x] == streak.height)
 			pos.x++;
 		streak.size = pos.x - streak.pos.x;
-		if (streak.size > biggest.size && same_height(streak))
+		while (streak.size > biggest.size && !same_height(streak))
+		{
+			streak.pos.x++;
+			streak.size--;
+		}
+		if (streak.size > biggest.size)
 		{
 			biggest = streak;
 			if (height - pos.y < biggest.size)
 				break;
 		}
-		if (pos.x == height)
+		if (height - pos.x < biggest.size)
 		{
 			pos.x = 0;
 			pos.y++;
-			if (height - pos.y < biggest.size)
+			if (height - pos.y  + 1< biggest.size)
 				break;
 		}
 	}
-	printf("streak size: %lu\n", biggest.size);
 	if (biggest.size != 1)
 	{
 		streak.pos.x = biggest.pos.x;
