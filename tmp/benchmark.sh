@@ -16,7 +16,7 @@ done
 
 for size in "${SIZES[@]}"; do
     echo "$size:"
-    time ./rush < "$size".map
+    time ./rush < "$size".map > /dev/null
 done
 
 for size in "${SIZES[@]}"; do
