@@ -1,15 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   local_mem.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: pablo <pablo@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/12 22:45:37 by pablo             #+#    #+#             */
+/*   Updated: 2021/04/12 22:52:30 by pablo            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-# pragma once
+#ifndef LOCAL_MEM_H
+# define LOCAL_MEM_H
 
 # include <stdbool.h>
 # include <local_types.h>
 
+extern t_uint_op	*g_matrix;
+extern t_uint_size	g_height;
+extern t_uint_op	g_ascii;
 
-# define HEIGHT 0//(1UL << 12)
-# define STATIC_ROOM (HEIGHT * (HEIGHT + 1UL))
+bool				mem_read_stdin();
 
-extern uint_op_t*  matrix; // 8
-extern uint_size_t height; // 8
-extern uint_op_t   ascii; // 4
-
-bool   mem_read_stdin();
+#endif

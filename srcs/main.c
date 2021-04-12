@@ -3,17 +3,14 @@
 #include <square.h>
 #include <stdlib.h>
 
-uint_op_t   static_matrix[STATIC_ROOM]; // 8
-uint_op_t   *dynamic_matrix = NULL;
-uint_op_t   *matrix = static_matrix; // 8
-uint_size_t dynamic_lenght = 0; // 8
-uint_size_t height = 0; // 8
-uint_op_t   ascii = 0; // 4
-
+t_uint_op   *g_matrix = NULL;
+t_uint_size g_dynamic_lenght = 0;
+t_uint_size g_height = 0;
+t_uint_op   g_ascii = 0;
 
 int print_matrix()
 {
-	return (write(STDOUT_FILENO, matrix, height * (height + 1)) != -1);
+	return (write(STDOUT_FILENO, g_matrix, g_height * (g_height + 1)) != -1);
 }
 
 int mark_the_square(t_streak *biggest)
@@ -30,14 +27,14 @@ int mark_the_square(t_streak *biggest)
 			pos.x = biggest->pos.x;
 			while (pos.x < end.x)
 			{
-				matrix[pos.y * (height + 1) + pos.x] = ascii;
+				g_matrix[pos.y * (g_height + 1) + pos.x] = g_ascii;
 				pos.x++;
 			}
 			pos.y++;
 		}
 	}
 	else
-		matrix[0] = ascii;
+		g_matrix[0] = g_ascii;
 	return (1);
 }
 
@@ -49,6 +46,6 @@ int main()
 		&& find_the_square(&streak)
 		&& mark_the_square(&streak)
 		&& print_matrix());
-	free(dynamic_matrix);
+	free(g_matrix);
 	return (err);
 } 
